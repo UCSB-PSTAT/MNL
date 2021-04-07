@@ -7,8 +7,15 @@ USER root
 # Install SSH client and Git
 RUN apt-get update && \
     apt-get install -y openssh-client \
-                    git && \
+                    git \
+                    gnupg2 \
+                    software-properties-common && \
     apt-get clean && apt-get autoremove && rm -rf /var/lib/apt/lists/*
+
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0 && \
+    apt-add-repository https://cli.github.com/packages && \
+    apt update && \
+    apt install gh
 
 USER $NB_UID
 
